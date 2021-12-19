@@ -1,0 +1,150 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!-- =========================================================== -->
+    <xs:complexType name="AuthorArray">
+        <xs:sequence>
+            <xs:element name="author" minOccurs="1" maxOccurs="unbounded" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
+    <!-- =========================================================== -->
+    <xs:complexType name="Metadata">
+        <xs:sequence>
+            <xs:element name="authors" type="AuthorArray">
+                <xs:annotation>
+                    <xs:documentation>
+The author of the created map, e.g., Jane Doe.
+</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="email" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[^@]+@[^\.]+\..+"></xs:pattern>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="license" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+        The license under which the map is published, e.g., GNU
+        GPL.
+        </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="copyright_owner" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+        The owner of the copyright, often an institution
+        </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="description" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+        A verbal description of the map. For example the hardware
+        used to create the map or any other useful description.
+        </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="map_location" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>
+        A verbal description of the mapped location, e.g.,
+        1st floor John Doe Building
+        </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="creation_date" type="xs:dateTime"></xs:element>
+            <xs:element name="last_modified" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>
+        Last modified date to keep track of changes to the map.
+        </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ============================================================ -->
+    <xs:complexType name="LocalMap" abstract="true">
+        <xs:sequence>
+            <xs:element name="metadata" type="Metadata" />
+            <xs:element name="offset" type="LocalMapTransform" minOccurs="0" maxOccurs="1" />
+            <xs:element name="coordinate_system" type="CoordinateSystemType" minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required" />
+        <xs:attribute name="map_type" type="LocalMapType" use="required" />
+        <xs:attribute name="mdr_version" type="xs:string" use="required" />
+    </xs:complexType> <!-- ============================================================ -->
+    <xs:complexType name="LocalMapTransform">
+        <xs:sequence>
+            <xs:element name="uncertainty" minOccurs="0" maxOccurs="1" type="UncertaintyPose" />
+        </xs:sequence>
+        <xs:attribute name="offset_x" type="xs:double" use="required" />
+        <xs:attribute name="offset_y" type="xs:double" use="required" />
+        <xs:attribute name="theta" type="xs:double" use="required" />
+    </xs:complexType> <!-- =========================================================== -->
+    <xs:simpleType name="LocalMapType">
+        <xs:restriction base="xs:integer">
+            <xs:enumeration value="1" />
+            <!-- The number '1' means "GridMap". -->
+            <xs:enumeration value="2" /> <!-- The number '2' means
+"GeometricMap". -->
+            <xs:enumeration value="3" /> <!-- The number '3' means
+"TopologicalMap". -->
+        </xs:restriction>
+    </xs:simpleType> <!-- ============================================================ -->
+    <xs:complexType name="CoordinateSystemType">
+        <xs:attribute name="EPSG_code" type="xs:string" use="optional" />
+        <xs:attribute name="reference_local_map" type="xs:string" use="optional" />
+    </xs:complexType> <!-- =========================================================== -->
+    <xs:complexType name="UncertaintyPose">
+        <xs:attribute name="covariance_xx" type="xs:double" use="required" />
+        <xs:attribute name="covariance_yy" type="xs:double" use="required" />
+        <xs:attribute name="covariance_thetatheta" type="xs:double" use="required" />
+        <xs:attribute name="covariance_xy" type="xs:double" use="required" />
+        <xs:attribute name="covariance_xtheta" type="xs:double" use="required" />
+        <xs:attribute name="covariance_ytheta" type="xs:double" use="required" />
+    </xs:complexType>
+
+
+    <!-- ============================================================ -->
+    <xs:complexType name='GridMap'>
+        <xs:complexContent>
+            <xs:extension base="LocalMap">
+                <xs:sequence>
+                    <xs:element name='palette_elements' minOccurs='0' maxOccurs='1' type='PaletteElementArray' />
+                    <xs:element name='cells' type='GridCellArray' />
+                </xs:sequence>
+                <xs:attribute name='resolution' type='xs:double' use='required' />
+                <xs:attribute name='num_cells_x' type='xs:unsignedInt' use='required' />
+                <xs:attribute name='num_cells_y' type='xs:unsignedInt' use='required' />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!-- ============================================================ -->
+    <xs:complexType name='GridCell'>
+        <xs:attribute name='x' type='xs:integer' use='required' />
+        <xs:attribute name='y' type='xs:integer' use='required' />
+        <xs:attribute name='height' type='xs:unsignedInt' use='optional' default='1' />
+        <xs:attribute name='width' type='xs:unsignedInt' use='optional' default='1' />
+        <xs:attribute name='value' type='xs:double' use='required' />
+    </xs:complexType>
+    <!-- ============================================================ -->
+    <xs:complexType name='GridCellArray'>
+        <xs:sequence>
+            <xs:element name='cell' minOccurs='1' maxOccurs='unbounded' type='GridCell' />
+        </xs:sequence>
+    </xs:complexType>
+    <!-- =========================================================== -->
+    <xs:complexType name='PaletteElement'>
+        <xs:attribute name='value_start' type='xs:double' use='required' />
+        <xs:attribute name='value_end' type='xs:double' use='optional' />
+        <xs:attribute name='meaning' type='xs:string' use='required' />
+    </xs:complexType>
+    <!-- ============================================================ -->
+    <xs:complexType name='PaletteElementArray'>
+        <xs:sequence>
+            <xs:element name='palette' minOccurs='0' maxOccurs='unbounded' type='PaletteElement' />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

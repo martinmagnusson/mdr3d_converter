@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF -8"?>
+<mdr:maps xmlns:mdr="http://www.example.org/mdr " xmlns:xsi=" http://www.w3.org/2001/XMLSchema-instance " xsi:schemaLocation="http://www.example.org/mdr␣MDR_schema.xsd ">
+
+    <grid_map id=" GridMap " maptype="1" num_cells_x="10" num_cells_y="10" resolution=" 0.2">
+
+        <metadata>
+            <null>
+</
+</metadata>
+<coordinate_system /><offset offset_x=" 0.0 " offset_y="0.0 " theta=" 0.0 "><uncertainty covariance_xx=" 0.0 " covariance_yy=" 0.0" covariance_thetatheta="
+0.0 " covariance_xy=" 0.0 " covariance_xtheta=" 0.0 " covariance_ytheta=" 0.0" /></
+</offset>
+<palette_elements><palette value_start="0" value_end=" 255 " meaning="A␣ value ␣ 0...255 ␣
+corresponds ␣to␣an␣ occupation ␣ probability ␣ 0.0...1.0. " /></
+</palette_elements>
+<cells><null><cell x="0" y="0" width="1" height="10" value=" 255" /><cell x="1" y="0" width="8" height="1" value=" 255" /><cell x="9" y="0" width="1" height="10" value=" 255" /><cell x="1" y="9" width="6" height="1" value=" 255" /><null>
+    <cell x="3" y="3" width="2" height="4" value=" 255 " />
+    <cell x="5" y="3" width="2" height="2" value=" 255 " />
+    <null>
+        <cell x="1" y="1" width="2" height="8" value="0" />
+        <cell x="3" y="1" width="4" height="2" value="0" />
+        <cell x="7" y="1" width="2" height="4" value="0" />
+        <cell x="3" y="7" width="2" height="2" value="0" />
+        <cell x="5" y="5" width="4" height="4" value="0" />
+        <cell x="7" y="9" width="2" height="1" value="0" />
+</
+</cells>
+</
+</grid_map>
+</
+</mdr:maps>

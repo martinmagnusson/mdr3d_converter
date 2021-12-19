@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<school xmlns="http://www.example.com"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="./Validation_Templates/Generic_XML_Schema.xsd">
+
+      <element1>hello</element1>
+      <element2>hello</element2>
+      <element3>hello</element3>
+      <element4>hello</element4>
+
+</school>
