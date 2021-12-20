@@ -54,7 +54,7 @@ def convert_ROS(file):
     ## Create JSOn file and original required Headers.
     create_json(output_name)
     #pixels_to_dict(config.properties)
-    add_to_json(config.properties, output_name)
+    add_ROSGRID_to_json(config.properties, output_name)
     end = time.time()
     print("Conversion Done!")
     log.logprint("Elapsed time is  {}s".format(end-start))
@@ -90,16 +90,17 @@ def convert_pointcloud(file):
         config.properties["width"] = re.search("WIDTH\s(.*)", file_data).group(1)
         config.properties["height"] = re.search("HEIGHT\s(.*)", file_data).group(1)
         config.properties["viewpoint"] = re.search("VIEWPOINT\s(.*)", file_data).group(1)
-        config.properties["points"] = re.search("POINTS\s(.*)", file_data).group(1)
-        config.properties["data"] = re.search("DATA\s(.*)", file_data).group(1)
-        print("\n properties data:" + str(config.properties))
-        #log.logprint("\ntest dict:"+ str(config.properties))
+        config.properties["total_points"] = re.search("POINTS\s(.*)", file_data).group(1)
+        config.properties["data_encoding"] = re.search("DATA\s(.*)", file_data).group(1)
+        last_line = re.search("(DATA\s.*)", file_data).group(1)
+        config.properties["points"] = re.search(last_line + "\s((.*\n*)*)", file_data).group(1)
+        log.logprint("\ntest points:"+ str(config.properties["points"]))
         log.logprint("Opened file: " +  str(os.path.realpath(f.name)))
 
-def add_to_json(properties, filename): #https://www.geeksforgeeks.org/append-to-json-file-using-python/
+def add_ROSGRID_to_json(properties, filename): #https://www.geeksforgeeks.org/append-to-json-file-using-python/
     with open(filename,'r+') as file: ## Currently everything is added as its own "Values" key, not sure if correct.
         log.logprint("Opened file:" + str(filename))
-        log.logprint(properties)
+        ##log.logprint(properties)
         file_data = json.load(file) # First we load existing data into a dict.
         file_data["properties"].update({"list_of_voxels": properties["pixels"]}) # Join new_data with file_data inside emp_details
         file_data["properties"].update({"resolution": str(float(properties["resolution"]))})
