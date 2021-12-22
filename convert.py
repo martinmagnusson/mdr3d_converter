@@ -123,21 +123,19 @@ def convert_pointcloud(file):
         file_matrix = f.readlines()
         print("test start")
         record = False
-        matrix = ""
+        matrix = []
         n=1
-        for lines in file_matrix:  # Check that all rows are there.
-            #print("\nLines: " + str(lines) + "last_line:" + str(last_line))
+        for lines in file_matrix:  # find last line, record rows after that in matrix.
             if record == True:
-                for i in str(lines).split():
-                    #print("reading matrix data")
+                    #print("reading matrix data:" + str(lines))
                     #print(i)
-                    matrix[n] += i
+                    matrix[n] = str(lines)
                     n += 1
             if str(lines).rstrip() == str(last_line).rstrip() and record == False:
                 print("last line found")
                 record = True
             matrix += "\n"
-        print(matrix)
+        print("Size of matrix is:" + str(len(matrix)))
         print("test done")
 
 

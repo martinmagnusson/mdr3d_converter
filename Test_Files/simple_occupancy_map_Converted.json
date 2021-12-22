@@ -50,9 +50,7 @@
             },
             "minItems": 1
         },
-        "list_of_voxels": 
-        {"C_name": "Voxel", "C_description": "none", "C_values": "1"},
-        {"C_name": "Voxel", "C_description": "none", "C_values": "1"}  
+        "list_of_voxels": [
             0,
             0,
             0,
@@ -128,7 +126,7 @@
             255,
             0,
             255
-        }
+        ]
     },
     "definitions": {
         "densegrid_voxel": {
