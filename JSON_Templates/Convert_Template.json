@@ -1,0 +1,8 @@
+{
+	"$id": "https://github.com/effelam/JSON_3dMaps/blob/master/local_maps_JSON/densegrid.json",
+	"title": "PCD",
+	"description": "Implementation of the local map type densegrid. A densegrid is a parallelepiped divided in equal voxels, which are described by the proper field.",
+	"type": "object",
+	"properties": {
+	}
+}

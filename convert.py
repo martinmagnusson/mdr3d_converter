@@ -124,13 +124,13 @@ def convert_pointcloud(file):
         print("test start")
         record = False
         matrix = []
-        n=1
+        n = 1
         for lines in file_matrix:  # find last line, record rows after that in matrix.
             if record == True:
-                    #print("reading matrix data:" + str(lines))
-                    #print(i)
-                    matrix[n] = str(lines)
-                    n += 1
+                #print("reading matrix data:" + str(lines))
+                # print(i)
+                matrix[n] = str(lines)
+                n += 1
             if str(lines).rstrip() == str(last_line).rstrip() and record == False:
                 print("last line found")
                 record = True
@@ -145,16 +145,27 @@ def add_ROSGRID_to_json(properties, filename):
     with open(filename, 'r+') as file:
         log.logprint("Opened file:" + str(filename))
         # log.logprint(properties)
-        file_data = json.load(file)  # First we load existing data into a dict.
+        file_data = json.load(file)
+        # file_data = json.load(file)  # First we load existing data into a dict.
         # Join new_data with file_data inside emp_details
+        file_data.update(
+            {"title": "Converted ROS Gridmap"})
+        file_data.update(
+            {"description": "Implementation of the local map type densegrid. A densegrid is a parallelepiped divided in equal voxels, which are described by the proper field."})
         file_data["properties"].update(
-            {"list_of_voxels": properties["pixels"]})
+            {"localmap_id": str(config.filename)})
         file_data["properties"].update(
-            {"resolution": str(float(properties["resolution"]))})
+            {"time": "now"})  # Temp
         file_data["properties"].update(
             {"map_description": "converted from old maptype"})
         file_data["properties"].update(
+            {"coordinate_system": "relative"})  # temp
+        file_data["properties"].update(
+            {"resolution": str(float(properties["resolution"]))})
+        file_data["properties"].update(
             {"size": [int(properties["width"]), int(properties["height"]), int(1)]})
+        file_data["properties"].update(
+            {"list_of_voxels": properties["pixels"]})
         # <-- get real name not path..
         file_data["properties"].update({"localmap_id": filename})
         file.seek(0)  # Sets file's current position at offset.
@@ -164,7 +175,10 @@ def add_ROSGRID_to_json(properties, filename):
 # Sets up the very most basic JSON 3D MDR document which can be edited with real data.
 def create_json(output_name):
     template_path = os.path.realpath(
-        str(config.program_path) + "/JSON_Templates/3D_DenseGrid.json")
+        str(config.program_path) + "/JSON_Templates/Convert_Template.json")
+    ## Check if output file already exists, if so, remove
+    if os.path.exists(output_name):
+            os.remove(output_name)
     shutil.copyfile(template_path, output_name)
     log.logprint("\nJSON file created \nHeader taken from: " +
                  str(template_path))
