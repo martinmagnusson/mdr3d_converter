@@ -94,9 +94,7 @@ while True:
         if values["-Checkbox_Logging-"] == True:
             config.logging_enabled = True
             print("\nLogfile will be created")
-            #config.logfile_path = str(config.filename.split(".")[0]) + "_Log.txt"
-            #logfile = open(config.logfile_path,"w+") ##Create logfile
-        config.Filetype = co.identify(config.Filetype)
+        config.Filetype = co.identify(config.Filetype) #Doesnt do much atm. Attempts to verify file.
         if config.Filetype == "2D Standard": # Only check validity on XML files
             if va.validate(config.filename, config.Filetype): ##Currently just says if file is valid or not, convert still runs afterwards.
                 log.logprint('Valid! :)')
