@@ -1,7 +1,7 @@
 {
-	"localmap_id": "ROS Template",
+	"localmap_id": "pointcloud_example",
 	"time": "2020-06-28T18:48:36.497552Z",
-	"map_description": "Converted from ROS Gridmap",
+	"map_description": "Converted from PCD file",
 	"coordinate_system": "relative",
 	"list_of_points": [
 		[
