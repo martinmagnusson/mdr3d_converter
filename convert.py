@@ -8,6 +8,7 @@ import custom_logging as log
 from PIL import Image as ImageProc
 import time
 import re
+import add_to_JSON
 
 
 # Currently this function just accepts the manually input filetype and prints and returns it to confirm.
@@ -20,15 +21,21 @@ def identify(string):
 def convert(file, filetype):
     log.logprint(os.path.abspath("\nConverting: " + str(file)))
     if filetype == "ROS Gridmap":
-        convert_ROS(file)
+        start = time.time()  # start time
+        extract_ROS(file)
+        create_json(config.output_name)
+        add_to_JSON.Rosgrid(config.properties, config.output_name)
+        end = time.time()
+        print("Conversion Done!")
+        log.logprint("Elapsed time is  {}s".format(end-start))
     elif filetype == "2D Standard":
         convert_2DStandard(file)
     elif filetype == "Pointcloud":
         convert_pointcloud(file)
 
 
-def convert_ROS(file):
-    start = time.time()  # start time
+def extract_ROS(file):
+    
     log.logprint("\nConverting from ROS Gridmap")
     config.program_path = os.path.dirname(__file__)
     log.logprint("Program_Path: " + str(config.program_path))
@@ -59,28 +66,9 @@ def convert_ROS(file):
     config.filename = os.path.splitext(str(file))
     log.logprint("\nfilename: ")
     log.logprint(config.filename)
-    output_name = os.path.realpath(config.filename[0] + "_Converted.json")
+    config.output_name = os.path.realpath(config.filename[0] + "_Converted.json")
     # Create JSOn file and original required Headers.
-    create_json(output_name)
-    # pixels_to_dict(config.properties)
-    add_ROSGRID_to_json(config.properties, output_name)
-    end = time.time()
-    print("Conversion Done!")
-    log.logprint("Elapsed time is  {}s".format(end-start))
 
-
-# Format the read pixels to fit in a JSON, since pixels already in array this is probably unceessary.
-def pixels_to_dict(properties):
-    # May not be required if the target standard doesnt require X,Y coordinates.
-    x = 0
-    y = 0
-    temp = "["
-    for n in properties["pixels"]:
-        temp = temp + str(n) + ","  # assemble the values to a string.
-    temp = temp + "]"
-    tempdict = {"items": temp}
-    properties.update(tempdict)
-    log.logprint("\nPrinting propterties[\"items\"]:" + properties["items"])
 
 
 def reset_config():  # will be needed to run after each convert probably.
@@ -139,37 +127,7 @@ def convert_pointcloud(file):
         print("test done")
 
 
-# https://www.geeksforgeeks.org/append-to-json-file-using-python/
-def add_ROSGRID_to_json(properties, filename):
-    # Currently everything is added as its own "Values" key, not sure if correct.
-    with open(filename, 'r+') as file:
-        log.logprint("Opened file:" + str(filename))
-        # log.logprint(properties)
-        file_data = json.load(file)
-        # file_data = json.load(file)  # First we load existing data into a dict.
-        # Join new_data with file_data inside emp_details
-        file_data.update(
-            {"title": "Converted ROS Gridmap"})
-        file_data.update(
-            {"description": "Implementation of the local map type densegrid. A densegrid is a parallelepiped divided in equal voxels, which are described by the proper field."})
-        file_data["properties"].update(
-            {"localmap_id": str(config.filename)})
-        file_data["properties"].update(
-            {"time": "now"})  # Temp
-        file_data["properties"].update(
-            {"map_description": "converted from old maptype"})
-        file_data["properties"].update(
-            {"coordinate_system": "relative"})  # temp
-        file_data["properties"].update(
-            {"resolution": str(float(properties["resolution"]))})
-        file_data["properties"].update(
-            {"size": [int(properties["width"]), int(properties["height"]), int(1)]})
-        file_data["properties"].update(
-            {"list_of_voxels": properties["pixels"]})
-        # <-- get real name not path..
-        file_data["properties"].update({"localmap_id": filename})
-        file.seek(0)  # Sets file's current position at offset.
-        json.dump(file_data, file, indent=4)  # convert back to json.
+
 
 
 # Sets up the very most basic JSON 3D MDR document which can be edited with real data.

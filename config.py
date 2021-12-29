@@ -9,3 +9,4 @@ Selected_file_path_dir = ""
 properties = {} ##Dict to hold all file data.
 filename = ""
 logfile_path = ""
+output_name = ""
