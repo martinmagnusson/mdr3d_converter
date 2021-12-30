@@ -17,7 +17,6 @@ def identify(string):
     filetype = string
     return filetype
 
-
 def convert(file, filetype):
     log.logprint(os.path.abspath("\nConverting: " + str(file)))
     if filetype == "ROS Gridmap":
@@ -25,32 +24,21 @@ def convert(file, filetype):
         extract.ROS(file)
         create_json(config.output_name)
         addtojson.Rosgrid(config.properties, config.output_name)
-        print("Conversion Done!")
-        log.logprint("Elapsed time is  {}s".format(time.time()-start))
     elif filetype == "2D Standard":
-        extract_2DStandard(file)
+        extract.XLM(file)
     elif filetype == "Pointcloud":
         extract.PCD(file)
-
-
-
-
-
+    print("Conversion Done!")
+    log.logprint("Elapsed time is  {}s".format(time.time()-start))
 
 def reset_config():  # will be needed to run after each convert probably.
-    return 0
-
-
-def extract_2DStandard(file):
-    log.logprint("\nConverting from 2D Standard")
-    json.dumps("2D standard test output")
-
-
-
-
-
-
-
+    program_path = ""
+    Selected_file_path = ""
+    Selected_file_path_dir = ""
+    properties = {} ##Dict to hold all file data.
+    filename = ""
+    logfile_path = ""
+    output_name = ""
 
 # Sets up the very most basic JSON 3D MDR document which can be edited with real data.
 def create_json(output_name):

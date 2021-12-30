@@ -7,7 +7,6 @@ import custom_logging as log
 from PIL import Image as ImageProc
 import re
 
-
 def ROS(file):
     log.logprint("\nConverting from ROS Gridmap")
     config.program_path = os.path.dirname(__file__)
@@ -89,3 +88,7 @@ def PCD(file):
             matrix += "\n"
         print("Size of matrix is:" + str(len(matrix)))
         print("test done")
+
+def XLM(file):
+    log.logprint("\nConverting from 2D Standard")
+    json.dumps("2D standard test output")
