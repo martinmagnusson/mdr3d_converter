@@ -6,6 +6,7 @@ import config
 import custom_logging as log
 from PIL import Image as ImageProc
 import re
+import numpy
 
 def ROS(file):
     properties = {}
@@ -56,15 +57,18 @@ def PCD(file):
         log.logprint("Opened file: " + str(os.path.realpath(f.name)))
     with open(file, "r") as f:  # Extract data
         file_matrix = f.readlines()
+        matrix = [[float(),float(),float()]]
         record = False
         for lines in file_matrix:  # find last line, record rows after that in matrix.
             if record == True:
-                print(lines.rstrip())
-                matrix = [item.split() for item in matrix.split('\n')[:-1]]
+                ##print(lines.rstrip())
+                data = lines.split(" ",2)
+                #matrix = numpy.append(matrix,data,0)
+                matrix.append([float(data[0]),float(data[1]),float(data[2])])
             if str(lines).rstrip() == str(last_line).rstrip() and record == False:
                 print("last line found")
                 record = True
-        log.logprint("Size of matrix is:" + str(len(matrix)))
+    log.logprint("Size of matrix is:" + str(len(matrix))) 
     config.properties["list_of_points"] = matrix
 
 def XLM(file):
