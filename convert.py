@@ -17,27 +17,32 @@ def identify(string):
     filetype = string
     return filetype
 
-def convert(file, filetype):
+def convert(file, filetype): ##Main file for handling full conversions.
+    start = time.time()  # start timer.
+    get_paths(file)
     log.logprint(os.path.abspath("\nConverting: " + str(file)))
     if filetype == "ROS Gridmap":
-        start = time.time()  # start time
+        log.logprint("\nConverting from ROS Gridmap")
         extract.ROS(file)
         create_json(config.output_name)
         addtojson.Rosgrid(config.properties, config.output_name)
     elif filetype == "2D Standard":
         extract.XLM(file)
     elif filetype == "Pointcloud":
+        log.logprint("\nConverting from PCD Pointcloud")
         extract.PCD(file)
         create_json(config.output_name)
         addtojson.Pointcloud(config.properties, config.output_name)
-    print("Conversion Done!")
-    log.logprint("Elapsed time is  {}s".format(time.time()-start))
+    log.logprint("\nClearing temp extracted data")
+    reset_config() ## Resets the variables holding data, so a new one can be performed without carryover.
+    log.logprint("\nConversion Done!")
+    log.logprint("\nElapsed time is  {}s".format(time.time()-start))
 
 def reset_config():  # will be needed to run after each convert probably.
     program_path = ""
     Selected_file_path = ""
     Selected_file_path_dir = ""
-    properties = {} ##Dict to hold all file data.
+    properties = {}
     filename = ""
     logfile_path = ""
     output_name = ""
@@ -52,3 +57,17 @@ def create_json(output_name):
     shutil.copyfile(template_path, output_name)
     log.logprint("\nJSON file created \nHeader taken from: " +
                  str(template_path))
+
+def get_paths(file):
+    config.program_path = os.path.dirname(__file__)
+    log.logprint("Program_Path: " + str(config.program_path))
+    config.Selected_file_path = os.path.abspath(file)
+    log.logprint("Selected_file_Path: " + str(config.Selected_file_path))
+    config.Selected_file_path_dir = os.path.dirname(file)
+    log.logprint("Selected_file_Path_dir: " +
+                 str(config.Selected_file_path_dir))
+    config.filename = os.path.splitext(str(file))
+    log.logprint("\nfilename: ")
+    log.logprint(config.filename)
+    config.output_name = os.path.realpath(
+        config.filename[0] + "_Converted.json")

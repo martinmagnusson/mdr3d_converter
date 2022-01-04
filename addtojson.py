@@ -68,7 +68,7 @@ def Pointcloud(properties, filename):
         file_data["properties"].update(
             {"coordinate_system": "relative"})  # temp
         file_data["properties"].update(
-            {"list_of_voxels": properties["pixels"]})
+            {"list_of_points": properties["list_of_points"]})
         # <-- get real name not path..
         file_data["properties"].update({"localmap_id": filename})
         file.seek(0)  # Sets file's current position at offset.
