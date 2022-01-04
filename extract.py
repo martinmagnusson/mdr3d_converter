@@ -57,7 +57,7 @@ def PCD(file):
         log.logprint("Opened file: " + str(os.path.realpath(f.name)))
     with open(file, "r") as f:  # Extract data
         file_matrix = f.readlines()
-        matrix = [[float(),float(),float()]]
+        matrix = []
         record = False
         for lines in file_matrix:  # find last line, record rows after that in matrix.
             if record == True:
