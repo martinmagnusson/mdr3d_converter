@@ -69,10 +69,8 @@ def PCD(file):
         # config.properties["points"] = re.search(last_line + "\s((.*\n*)*)", file_data).group(1)
         # log.logprint("\ntest points:"+ str(config.properties["points"]))
         log.logprint("Opened file: " + str(os.path.realpath(f.name)))
-
     with open(file, "r") as f:  # Extract data as dict.
         file_matrix = f.readlines()
-        print("test start")
         record = False
         matrix = []
         n = 1
@@ -86,8 +84,7 @@ def PCD(file):
                 print("last line found")
                 record = True
             matrix += "\n"
-        print("Size of matrix is:" + str(len(matrix)))
-        print("test done")
+        log.logprint("Size of matrix is:" + str(len(matrix)))
 
 def XLM(file):
     log.logprint("\nConverting from 2D Standard")

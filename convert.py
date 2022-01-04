@@ -28,6 +28,8 @@ def convert(file, filetype):
         extract.XLM(file)
     elif filetype == "Pointcloud":
         extract.PCD(file)
+        create_json(config.output_name)
+        addtojson.Pointcloud(config.properties, config.output_name)
     print("Conversion Done!")
     log.logprint("Elapsed time is  {}s".format(time.time()-start))
 
