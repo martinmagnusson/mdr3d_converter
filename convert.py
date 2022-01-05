@@ -43,6 +43,7 @@ def reset_config():  # will be needed to run after each convert probably.
     filename = ""
     logfile_path = ""
     output_name = ""
+    matrix_out = []
 
 # Sets up the very most basic JSON 3D MDR document which can be edited with real data.
 def create_json(output_name):
