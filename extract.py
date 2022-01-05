@@ -70,7 +70,8 @@ def PCD(file):
                 record = True
     log.logprint("Size of matrix is:" + str(len(matrix))) 
     config.properties["list_of_points"] = matrix
-
+    config.matrix_out = matrix
+    
 def XLM(file):
     log.logprint("\nConverting from 2D Standard")
     json.dumps("2D standard test output")

@@ -12,3 +12,4 @@ properties = {} ##Dict to hold all file data.
 filename = ""
 logfile_path = ""
 output_name = ""
+matrix_out = []
