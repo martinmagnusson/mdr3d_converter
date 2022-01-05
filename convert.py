@@ -25,23 +25,20 @@ def convert(file, filetype): ##Main file for handling full conversions.
         log.logprint("\nConverting from ROS Gridmap")
         extract.ROS(file)
         create_json(config.output_name)
-        addtojson.Rosgrid(config.properties, config.output_name)
+        addtojson.Rosgrid()
     elif filetype == "2D Standard":
         extract.XLM(file)
     elif filetype == "Pointcloud":
         log.logprint("\nConverting from PCD Pointcloud")
         extract.PCD(file)
         create_json(config.output_name)
-        addtojson.Pointcloud(config.properties, config.output_name)
+        addtojson.Pointcloud()
     log.logprint("\nClearing temp extracted data")
     reset_config() ## Resets the variables holding data, so a new one can be performed without carryover.
     log.logprint("\nConversion Done!")
     log.logprint("\nElapsed time is  {}s".format(time.time()-start))
 
 def reset_config():  # will be needed to run after each convert probably.
-    program_path = ""
-    Selected_file_path = ""
-    Selected_file_path_dir = ""
     properties = {}
     filename = ""
     logfile_path = ""
