@@ -8,7 +8,7 @@ import custom_logging as log
 from PIL import Image as ImageProc
 import time
 import re
-
+from datetime import datetime
 
 def Rosgrid():
     # Currently everything is added as its own "Values" key, not sure if correct.
@@ -25,7 +25,7 @@ def Rosgrid():
         file_data["properties"].update(
             {"localmap_id": str(config.filename)})
         file_data["properties"].update(
-            {"time": "now"})  # Temp
+            {"time": str(datetime.now())})  # Temp
         file_data["properties"].update(
             {"map_description": "converted from old maptype"})
         file_data["properties"].update(
@@ -62,7 +62,7 @@ def Pointcloud():
         file_data["properties"].update(
             {"localmap_id": str(config.filename)})
         file_data["properties"].update(
-            {"time": "now"})  # Temp
+            {"time": str(datetime.now())})  # Temp
         file_data["properties"].update(
             {"map_description": "converted from old maptype"})
         file_data["properties"].update(
