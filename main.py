@@ -96,17 +96,18 @@ while True:
             print("\nLogfile will be created")
         config.Filetype = co.identify(config.Filetype) #Doesnt do much atm. Attempts to verify file.
         if config.Filetype == "2D Standard": # Only check validity on XML files
-            if va.validate(config.filename, config.Filetype): ##Currently just says if file is valid or not, convert still runs afterwards.
+            if va.validate(config.Selected_file_path, config.Filetype): ##Currently just says if file is valid or not, convert still runs afterwards.
                 log.logprint('Valid! :)')
             else:
                 log.logprint('Not valid! :(')
-        co.convert(config.filename, config.Filetype)
+        co.convert(config.Selected_file_path, config.Filetype)
     elif event == "-FILE LIST-":  # A file was chosen from the listbox
         try:
-            config.filename = os.path.join(
+            config.Selected_file_path = os.path.join(
                 values["-FOLDER-"], values["-FILE LIST-"][0]
             )
-            window["-TOUT-"].update(config.filename)
+            config.filename = values["-FILE LIST-"][0]
+            window["-TOUT-"].update(config.Selected_file_path)
             window["Convert"].update(disabled=False, button_color="forestgreen")
         except:
             pass

@@ -44,6 +44,7 @@ def convert(file, filetype): ##Main file for handling full conversions.
 
 def reset_config():  # will be needed to run after each convert probably.
     config.properties = {}
+    config.Selected_file_path = ""
     config.filename = ""
     config.logfile_path = ""
     config.output_name = ""
@@ -69,8 +70,8 @@ def get_paths(file):
     config.Selected_file_path_dir = os.path.dirname(file)
     log.logprint("Selected_file_Path_dir: " +
                  str(config.Selected_file_path_dir))
-    config.filename = os.path.splitext(str(file))
-    log.logprint("\nfilename: ")
-    log.logprint(config.filename)
+    config.Selected_file_path = os.path.splitext(str(file))
+    log.logprint("\nSelected_file_path: ")
+    log.logprint(config.Selected_file_path)
     config.output_name = os.path.realpath(
-        config.filename[0] + "_Converted.json")
+        config.Selected_file_path[0] + "_Converted.json")
