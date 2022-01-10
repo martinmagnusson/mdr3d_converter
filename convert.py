@@ -17,30 +17,27 @@ def identify(string):
     filetype = string
     return filetype
 
-def convert(file, filetype): ##Main file for handling full conversions.
+def convert(file, filetype): #Main function for handling full conversions.
     start = time.time()  # start timer.
     get_paths(file)
+    create_json(config.output_name)
     config.time_now = str(datetime.now())
     log.logprint(os.path.abspath("\nConverting: " + str(file)))
     if filetype == "ROS Gridmap":
         log.logprint("\nConverting from ROS Gridmap")
         extract.ROS(file)
-        create_json(config.output_name)
         addtojson.Rosgrid()
     elif filetype == "2D Standard":
-        extract.XLM(file)
+        extract.XML(file)
     elif filetype == "Pointcloud":
         log.logprint("\nConverting from PCD Pointcloud")
-        extract.PCD(file)
-        create_json(config.output_name)
+        extract.PCD(file) 
         addtojson.Pointcloud()
     log.logprint("printing Properties dict")
-    log.logprint(config.properties)
     log.logprint("\nClearing temp extracted data")
     reset_config() ## Resets the variables holding data, so a new one can be performed without carryover.
     log.logprint("\nConversion Done!")
     log.logprint("\nElapsed time is  {}s".format(time.time()-start))
-    log.logprint("printing Properties dict after reset")
 
 def reset_config():  # will be needed to run after each convert probably.
     config.properties = {}

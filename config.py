@@ -1,4 +1,5 @@
 # shared Variables in program
+#Related to UI
 logging_enabled = False
 Filetypes = ["ROS Gridmap", "2D Standard", "Pointcloud", "Test XSD"]
 Font = "Helvetica, 14"

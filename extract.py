@@ -7,6 +7,7 @@ import custom_logging as log
 from PIL import Image as ImageProc
 import re
 import numpy
+from bs4 import BeautifulSoup #XML
 
 def ROS(file):
     properties = {}
@@ -71,6 +72,12 @@ def PCD(file):
     config.properties["list_of_points"] = matrix
     config.matrix_out = matrix
     
-def XLM(file):
+def XML(file):
     log.logprint("\nConverting from 2D Standard")
-    json.dumps("2D standard test output")
+    with open(file, 'r') as f:
+        data = f.read()
+    Bs_data = BeautifulSoup(data, "xml")
+    num_cells = Bs_data.find('num_cells_x')
+    cells = Bs_data.find_all('cells')
+    log.logprint(num_cells)
+    log.logprint(cells)

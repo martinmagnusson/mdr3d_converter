@@ -8,6 +8,8 @@ import custom_logging as log
 ## Packages needed.
     # pip3 install Pillow
     # pip3 install pysimplegui
+    # pip3 install beautifulsoup4
+    # pip3 install lxml
 # https://csveda.com/python-combo-and-listbox-with-pysimplegui/
 from PySimpleGUI.PySimpleGUI import Checkbox, Tab
 sg.theme('graygraygray')  # color
@@ -96,11 +98,11 @@ while True:
             print("\nLogfile will be created")
         config.Filetype = co.identify(config.Filetype) #Doesnt do much atm. Attempts to verify file.
         if config.Filetype == "2D Standard": # Only check validity on XML files
-            if va.validate(config.Selected_file_path, config.Filetype): ##Currently just says if file is valid or not, convert still runs afterwards.
-                log.logprint('Valid! :)')
-            else:
-                log.logprint('Not valid! :(')
-        co.convert(config.Selected_file_path, config.Filetype)
+            #if va.validate(config.Selected_file_path, config.Filetype): ##Currently just says if file is valid or not, convert still runs afterwards.
+                #log.logprint('Valid! :)')
+            #else:
+                #log.logprint('Not valid! :(')
+            co.convert(config.Selected_file_path, config.Filetype)
     elif event == "-FILE LIST-":  # A file was chosen from the listbox
         try:
             config.Selected_file_path = os.path.join(
