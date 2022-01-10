@@ -4,8 +4,12 @@
     "description": "Implementation of the local map type densegrid. A densegrid is a parallelepiped divided in equal voxels, which are described by the proper field.",
     "type": "object",
     "properties": {
-        "localmap_id": "E:\\Dropbox\\Student\\Exjobb\\Martin\\Program\\Test_Files\\occupancy_map_Converted.json",
-        "time": "now",
+        "localmap_id": [
+            "E:/Dropbox/Student/Exjobb/Martin/Program/Test_Files\\occupancy_map",
+            ".yaml"
+        ],
+        "time": "2022-01-05 13:30:31.834911",
+                "2020-06-28T18:48:36.497552Z
         "map_description": "converted from old maptype",
         "coordinate_system": "relative",
         "resolution": [
@@ -19,7 +23,7 @@
             1
         ],
         "list_of_characteristics": {
-            "C_name": "ocupancy"
+            "C_name": "occupancy"
         },
         "list_of_voxels": [
             205,

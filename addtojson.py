@@ -8,7 +8,6 @@ import custom_logging as log
 from PIL import Image as ImageProc
 import time
 import re
-from datetime import datetime
 
 def Rosgrid():
     # Currently everything is added as its own "Values" key, not sure if correct.
@@ -25,24 +24,31 @@ def Rosgrid():
         file_data["properties"].update(
             {"localmap_id": str(config.filename)})
         file_data["properties"].update(
-            {"time": str(datetime.now())})  # Temp
+            {"time": config.time_now})
         file_data["properties"].update(
             {"map_description": "converted from old maptype"})
         file_data["properties"].update(
             {"coordinate_system": "relative"})  # temp
-        ##Assumption! z resolution is same as x and y, Maybe better set z as 1?
-        res_array = [float(config.properties["resolution"]),float(config.properties["resolution"]),float(config.properties["resolution"])]
-        log.logprint("Resolution taken from x,y as " + str(float(config.properties["resolution"])) + "and assumed same for z.")
-        file_data["properties"].update(
-            {"resolution": res_array})
+        if config.properties["resolution"] != "":         ##Assumption! z resolution is same as x and y, Maybe better set z as 1?
+            res_array = [float(config.properties["resolution"]),float(config.properties["resolution"]),float(config.properties["resolution"])]
+            log.logprint("Resolution taken from x,y as " + str(float(config.properties["resolution"])) + "and assumed same for z.")
+            file_data["properties"].update(
+                {"resolution": res_array})
         file_data["properties"].update(
             {"size": [int(config.properties["width"]), int(config.properties["height"]), int(1)]})
         file_data["properties"].update(
             {"localmap_id": config.filename})
         file_data["properties"].update(
-            {"list_of_characteristics": {"C_name": "occupancy"}})
+            {"list_of_characteristics": {"C_name": "occupation"}})
+        file_data["properties"].update(
+            {"list_of_characteristics": {"C_description": "Simple occupancy: 0 means free and 1 means occupied"}})
+
         file_data["properties"].update( 
             {"list_of_voxels": config.properties["pixels"]})
+        #negate: 0 ## Where do these extracted values go?
+        #occupied_thresh: 0.65
+        #free_thresh: 0.196
+
         file.seek(0)  # Sets file's current position at offset.
         json.dump(file_data, file, indent=4)  # convert back to json.
 
@@ -62,7 +68,7 @@ def Pointcloud():
         file_data["properties"].update(
             {"localmap_id": str(config.filename)})
         file_data["properties"].update(
-            {"time": str(datetime.now())})  # Temp
+            {"time": config.time_now})  # Temp
         file_data["properties"].update(
             {"map_description": "converted from old maptype"})
         file_data["properties"].update(

@@ -21,12 +21,11 @@ def ROS(file):
         log.logprint("Loading PGM data.")
         pixels = list(pgmf.getdata())
         width, height = pgmf.size
-        config.properties.update(dict({"width": width}))
-        config.properties.update(dict({"height": height}))
-        config.properties.update(dict({"pixels": pixels}))
+        config.properties.update(dict({"width": width})) 
+        config.properties.update(dict({"height": height})) 
+        config.properties.update(dict({"pixels": pixels})) 
     log.logprint("\tWidth:" + str(width) + "\n\theight:" +
                  str(height) + "\n\tAmount: \n")
-    log.logprint(properties)
     # remove extension from file to make name for convert.
 
 def PCD(file):
@@ -46,7 +45,7 @@ def PCD(file):
         config.properties["height"] = re.search(
             "HEIGHT\s(.*)", file_data).group(1)
         config.properties["viewpoint"] = re.search(
-            "VIEWPOINT\s(.*)", file_data).group(1)
+            "VIEWPOINT\s(.*)", file_data).group(1)   
         config.properties["total_points"] = re.search(
             "POINTS\s(.*)", file_data).group(1)
         config.properties["data_encoding"] = re.search(

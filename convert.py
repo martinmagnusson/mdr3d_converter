@@ -9,7 +9,7 @@ from PIL import Image as ImageProc
 import time
 import addtojson
 import extract
-
+from datetime import datetime
 
 # Currently this function just accepts the manually input filetype and prints and returns it to confirm.
 def identify(string):
@@ -20,6 +20,7 @@ def identify(string):
 def convert(file, filetype): ##Main file for handling full conversions.
     start = time.time()  # start timer.
     get_paths(file)
+    config.time_now = str(datetime.now())
     log.logprint(os.path.abspath("\nConverting: " + str(file)))
     if filetype == "ROS Gridmap":
         log.logprint("\nConverting from ROS Gridmap")
@@ -33,17 +34,21 @@ def convert(file, filetype): ##Main file for handling full conversions.
         extract.PCD(file)
         create_json(config.output_name)
         addtojson.Pointcloud()
+    log.logprint("printing Properties dict")
+    log.logprint(config.properties)
     log.logprint("\nClearing temp extracted data")
     reset_config() ## Resets the variables holding data, so a new one can be performed without carryover.
     log.logprint("\nConversion Done!")
     log.logprint("\nElapsed time is  {}s".format(time.time()-start))
+    log.logprint("printing Properties dict after reset")
 
 def reset_config():  # will be needed to run after each convert probably.
-    properties = {}
-    filename = ""
-    logfile_path = ""
-    output_name = ""
-    matrix_out = []
+    config.properties = {}
+    config.filename = ""
+    config.logfile_path = ""
+    config.output_name = ""
+    config.matrix_out = []
+    config.time_out = ""
 
 # Sets up the very most basic JSON 3D MDR document which can be edited with real data.
 def create_json(output_name):

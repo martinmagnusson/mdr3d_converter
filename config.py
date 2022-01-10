@@ -13,3 +13,4 @@ filename = ""
 logfile_path = ""
 output_name = ""
 matrix_out = []
+time_now = ""
