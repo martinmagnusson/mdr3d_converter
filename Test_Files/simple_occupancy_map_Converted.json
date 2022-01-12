@@ -19,7 +19,7 @@
             1
         ],
         "list_of_characteristics": {
-            "C_description": "Simple occupancy: 0 means free and 1 means occupied"
+            "C_description": "Simple occupancy: 0 means free and 255 means occupied"
         },
         "list_of_voxels": [
             0,
