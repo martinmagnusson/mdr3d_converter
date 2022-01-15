@@ -12,13 +12,11 @@ from bs4 import BeautifulSoup #XML
 def ROS(file):
     properties = {}
     with open(file, "r") as f:  # Extract data as dict.
-        #config.properties = dict(i.strip().split(":", 1) for i in f)
         for line in f:
-            if not (line is "" or line is";" or line is "\n"): ##Make sure line is not empty.
+            if not (line == "" or line == ";" or line == "\n"): ##Make sure line is not empty.
                 (key, val) = line.strip().split(":")
-                print("\n" +str(key))
-                print("\t" +str(val))
-                config.properties[key] = val
+                print("\n" +str(key) + "\t" +str(val))
+                config.properties[key] = val.lstrip()
         print("\ntest dict:" + str(config.properties))
         log.logprint("Opened file: " + str(os.path.realpath(f.name)))
     pgm_file_path = os.path.abspath(str(
