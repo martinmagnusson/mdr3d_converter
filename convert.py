@@ -36,11 +36,11 @@ def convert(file, filetype): #Main function for handling full conversions.
     log.logprint("printing Properties dict")
     log.logprint("\nClearing temp extracted data")
     reset_config() ## Resets the variables holding data, so a new one can be performed without carryover.
-    log.logprint("\nConversion Done!")
+    print("\nConversion Done!")
     log.logprint("\nElapsed time is  {}s".format(time.time()-start))
 
 def reset_config():  # will be needed to run after each convert probably.
-    config.properties = {}
+    config.properties.clear()
     config.Selected_file_path = ""
     config.filename = ""
     config.logfile_path = ""

@@ -12,10 +12,15 @@ from bs4 import BeautifulSoup #XML
 def ROS(file):
     properties = {}
     with open(file, "r") as f:  # Extract data as dict.
-        config.properties = dict(i.strip().split(":", 1) for i in f)
-        log.logprint("\ntest dict:" + str(config.properties))
+        #config.properties = dict(i.strip().split(":", 1) for i in f)
+        for line in f:
+            if not (line is "" or line is";" or line is "\n"): ##Make sure line is not empty.
+                (key, val) = line.strip().split(":")
+                print("\n" +str(key))
+                print("\t" +str(val))
+                config.properties[key] = val
+        print("\ntest dict:" + str(config.properties))
         log.logprint("Opened file: " + str(os.path.realpath(f.name)))
-    # Not sure why a .strip has to be applied here again. since its done earlier
     pgm_file_path = os.path.abspath(str(
         config.Selected_file_path_dir) + "/" + str(config.properties["image"].strip()))
     with ImageProc.open(pgm_file_path, mode="r") as pgmf:
@@ -26,7 +31,7 @@ def ROS(file):
         config.properties.update(dict({"height": height})) 
         config.properties.update(dict({"pixels": pixels})) 
     log.logprint("\tWidth:" + str(width) + "\n\theight:" +
-                 str(height) + "\n\tAmount: \n")
+                 str(height) + "\n\tAmount: " + str(len(pixels)))
     # remove extension from file to make name for convert.
 
 def PCD(file):

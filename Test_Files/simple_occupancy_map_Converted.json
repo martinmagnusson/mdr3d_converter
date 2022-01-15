@@ -5,7 +5,7 @@
     "type": "object",
     "properties": {
         "localmap_id": "simple_occupancy_map.yaml",
-        "time": "2022-01-11 09:52:47.921689",
+        "time": "2022-01-12 17:16:39.166729",
         "map_description": "converted from old maptype",
         "coordinate_system": "relative",
         "resolution": [
@@ -19,7 +19,7 @@
             1
         ],
         "list_of_characteristics": {
-            "C_description": "Simple occupancy: 0 means free and 255 means occupied"
+            "C_description": "Simple occupancy: 0 means free and 1 means occupied"
         },
         "list_of_voxels": [
             0,
