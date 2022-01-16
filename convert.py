@@ -42,6 +42,7 @@ def convert(file, filetype): #Main function for handling full conversions.
 def reset_config():  # will be needed to run after each convert probably.
     config.properties.clear()
     config.Selected_file_path = ""
+    config.Selected_file_path_dir = ""
     config.filename = ""
     config.logfile_path = ""
     config.output_name = ""
