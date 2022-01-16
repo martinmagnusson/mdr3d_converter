@@ -105,10 +105,13 @@ while True:
         co.convert(config.Selected_file_path, config.Filetype)
     elif event == "-FILE LIST-":  # A file was chosen from the listbox
         try:
-            config.Selected_file_path = os.path.join(
-                values["-FOLDER-"], values["-FILE LIST-"][0]
-            )
             config.filename = values["-FILE LIST-"][0]
+            config.Selected_file_path_dir = values["-FOLDER-"]
+            config.Selected_file_path = os.path.join(
+                config.Selected_file_path_dir, config.filename
+            )
+            print(type(config.Selected_file_path))
+            print("\nValues Folder:" +str(values["-FOLDER-"])+ "\nFile:" + str(values["-FILE LIST-"][0]))
             window["-TOUT-"].update(config.Selected_file_path)
             window["Convert"].update(disabled=False, button_color="forestgreen")
         except:

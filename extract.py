@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup #XML
 
 def ROS(file):
     properties = {}
-    with open(file, "r") as f:  # Extract data as dict.
+    with open(config.Selected_file_path, "r") as f:  # Extract data as dict.
         for line in f:
             if not (line == "" or line == ";" or line == "\n"): ##Make sure line is not empty.
                 (key, val) = line.strip().split(":")

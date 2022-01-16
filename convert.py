@@ -19,7 +19,7 @@ def identify(string):
 
 def convert(file, filetype): #Main function for handling full conversions.
     start = time.time()  # start timer.
-    get_paths(file)
+    get_path_converted_file()
     create_json(config.output_name)
     config.time_now = str(datetime.now())
     log.logprint(os.path.abspath("\nConverting: " + str(file)))
@@ -53,22 +53,14 @@ def create_json(output_name):
     template_path = os.path.realpath(
         str(config.program_path) + "/JSON_Templates/Convert_Template.json")
     ## Check if output file already exists, if so, remove
+    print("Template path is:" + str(template_path))
     if os.path.exists(output_name):
             os.remove(output_name)
     shutil.copyfile(template_path, output_name)
     log.logprint("\nJSON file created \nHeader taken from: " +
                  str(template_path))
 
-def get_paths(file):
+def get_path_converted_file():
     config.program_path = os.path.dirname(__file__)
-    log.logprint("Program_Path: " + str(config.program_path))
-    config.Selected_file_path = os.path.abspath(file)
-    log.logprint("Selected_file_Path: " + str(config.Selected_file_path))
-    config.Selected_file_path_dir = os.path.dirname(file)
-    log.logprint("Selected_file_Path_dir: " +
-                 str(config.Selected_file_path_dir))
-    config.Selected_file_path = os.path.splitext(str(file))
-    log.logprint("\nSelected_file_path: ")
-    log.logprint(config.Selected_file_path)
     config.output_name = os.path.realpath(
         config.Selected_file_path[0] + "_Converted.json")
