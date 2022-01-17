@@ -15,9 +15,9 @@ def ROS(file):
         for line in f:
             if not (line == "" or line == ";" or line == "\n"): ##Make sure line is not empty.
                 (key, val) = line.strip().split(":")
-                print("\n" +str(key) + "\t" +str(val))
+                #print("\n" +str(key) + "\t" +str(val))
                 config.properties[key] = val.lstrip()
-        print("\ntest dict:" + str(config.properties))
+        #print("\ntest dict:" + str(config.properties))
         log.logprint("Opened file: " + str(os.path.realpath(f.name)))
     pgm_file_path = os.path.abspath(str(
         config.Selected_file_path_dir) + "/" + str(config.properties["image"].strip()))

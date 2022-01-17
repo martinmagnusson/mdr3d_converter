@@ -54,7 +54,7 @@ def create_json(output_name):
     template_path = os.path.realpath(
         str(config.program_path) + "/JSON_Templates/Convert_Template.json")
     ## Check if output file already exists, if so, remove
-    print("Template path is:" + str(template_path))
+    #print("Template path is:" + str(template_path))
     if os.path.exists(output_name):
             os.remove(output_name)
     shutil.copyfile(template_path, output_name)
@@ -65,4 +65,4 @@ def get_path_converted_file():
     config.program_path = os.path.dirname(__file__)
     config.output_name = os.path.realpath(
         config.Selected_file_path.split(".")[0] + "_Converted.json")
-    print("Output name is:" + config.output_name)
+    #print("Output name is:" + config.output_name)
