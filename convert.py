@@ -64,4 +64,5 @@ def create_json(output_name):
 def get_path_converted_file():
     config.program_path = os.path.dirname(__file__)
     config.output_name = os.path.realpath(
-        config.Selected_file_path[0] + "_Converted.json")
+        config.Selected_file_path.split(".")[0] + "_Converted.json")
+    print("Output name is:" + config.output_name)
