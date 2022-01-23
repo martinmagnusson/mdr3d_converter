@@ -103,14 +103,25 @@ while True:
             window["Convert"].update(disabled=True, button_color="grey")
         print("Batch mode:" + str(config.batch_enabled))
     if event == "Convert":
-        print("Start Converting")  # Create popup?
         if values["-Checkbox_Logging-"] == True:
             config.logging_enabled = True
             print("\nLogfile will be created")
-        if values["-Checkbox_Batch-"] == True:
-            config.batch_enabled = True
-            print("checkbox test")
-        co.convert(config.Selected_file_path, config.Filetype)
+        else:
+            config.logging_enabled = False
+        if config.batch_enabled == True:
+            config.Selected_file_path_dir = values["-FOLDER-"]
+            for file in os.listdir(config.Selected_file_path_dir):
+                if values['-FILETYPE-'] == "ROS Gridmap": ##Only run on ROS Gridmap files, skip others.
+                    if file.endswith('.yaml'): ##Assume ROS Gridmaps are always YAML files.
+                        config.filename = str(file)
+                        config.Selected_file_path = os.path.join(config.Selected_file_path_dir, config.filename)
+                        print(config.Selected_file_path)
+                        print("Found matching file, converting:" + config.filename)
+                        co.convert(config.Selected_file_path, config.Filetype)  
+                    else:
+                        print("Skipping File:" + str(file))         
+        else:
+            co.convert(config.Selected_file_path, config.Filetype)
     elif event == "-FILE LIST-":  # A file was chosen from the listbox
         try:
             config.filename = values["-FILE LIST-"][0]
@@ -118,7 +129,6 @@ while True:
             config.Selected_file_path = os.path.join(
                 config.Selected_file_path_dir, config.filename
             )
-            print(type(config.Selected_file_path))
             print("\nValues Folder:" +str(values["-FOLDER-"])+ "\nFile:" + str(values["-FILE LIST-"][0]))
             window["-TOUT-"].update(config.Selected_file_path)
             window["Convert"].update(disabled=False, button_color="forestgreen")

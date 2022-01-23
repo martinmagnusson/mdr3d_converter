@@ -18,6 +18,7 @@ def identify(string):
     return filetype
 
 def convert(file, filetype): #Main function for handling full conversions.
+    print("Start Converting")  # Create popup?
     start = time.time()  # start timer.
     get_path_converted_file()
     create_json(config.output_name)
