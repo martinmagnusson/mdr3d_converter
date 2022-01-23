@@ -5,11 +5,11 @@ import validation as va
 import config
 import custom_logging as log
 
-## Packages needed.
-    # pip3 install Pillow
-    # pip3 install pysimplegui
-    # pip3 install beautifulsoup4
-    # pip3 install lxml
+# Packages needed.
+# pip3 install Pillow
+# pip3 install pysimplegui
+# pip3 install beautifulsoup4
+# pip3 install lxml
 # https://csveda.com/python-combo-and-listbox-with-pysimplegui/
 from PySimpleGUI.PySimpleGUI import Checkbox, Tab
 sg.theme('graygraygray')  # color
@@ -30,17 +30,19 @@ file_list_column = [
         )
     ],
     [sg.HSeparator()],
-    #[
+    # [
     #    sg.Text("File \t"),
     #    sg.In(size=(25, 1), enable_events=True, key="-FILE-"),
     #    sg.FileBrowse(),
-    #],
+    # ],
     [
-        sg.Checkbox("Run on All Files in folder", key="-Checkbox_Batch-", tooltip="Run operation on all files in the folder", enable_events=True)
+        sg.Checkbox("Run on All Files in folder", key="-Checkbox_Batch-",
+                    tooltip="Run operation on all files in the folder", enable_events=True)
     ],
     [sg.HSeparator()],
     [
-        sg.Button("Exit", font=config.Font, button_color="lightcoral", size=(20, 1))
+        sg.Button("Exit", font=config.Font,
+                  button_color="lightcoral", size=(20, 1))
     ],
 
 ]
@@ -57,7 +59,8 @@ image_viewer_column = [
                  default_value=config.Filetypes[0], tooltip="Select what format to convert from."),
         sg.Button("Convert", font=config.Font,
                   button_color="grey", size=(20, 1), disabled=True),
-        sg.Checkbox("Create Logfile", key="-Checkbox_Logging-", tooltip="Enable to create a logfile along with the conversion")
+        sg.Checkbox("Create Logfile", key="-Checkbox_Logging-",
+                    tooltip="Enable to create a logfile along with the conversion")
     ]
 ]
 
@@ -79,7 +82,7 @@ while True:
         break
     if event == "-FILETYPE-":  # Extract the Filetype selected.
         config.Filetype = values['-FILETYPE-']
-        #print(config.Filetype)
+        # print(config.Filetype)
     if event == "-FOLDER-":     # Folder name was filled in, make a list of files in the folder
         folder = values["-FOLDER-"]
         try:
@@ -94,13 +97,21 @@ while True:
             and f.lower().endswith((".pcd", ".pgm", ".yaml", ".json", ".xml"))
         ]
         window["-FILE LIST-"].update(fnames)
-    if event == "-Checkbox_Batch-": ## Enable Conversion button without selecting a file.
+    # Enable Conversion button without selecting a file.
+    if event == "-Checkbox_Batch-": ## Batch Checkbox
         if config.batch_enabled == False:
             config.batch_enabled = True
-            window["Convert"].update(disabled=False, button_color="forestgreen")
+            window["Convert"].update(
+                disabled=False, button_color="forestgreen")
         else:
             config.batch_enabled = False
             window["Convert"].update(disabled=True, button_color="grey")
+        print("Batch mode:" + str(config.batch_enabled))
+    if event == "-Checkbox_Logging-": ##Loggin Checkbox
+        if config.logging_enabled == False:
+            config.logging_enabled = True
+        else:
+            config.logging_enabled = False
         print("Batch mode:" + str(config.batch_enabled))
     if event == "Convert":
         if values["-Checkbox_Logging-"] == True:
@@ -108,19 +119,15 @@ while True:
             print("\nLogfile will be created")
         else:
             config.logging_enabled = False
-        if config.batch_enabled == True:
+        if config.batch_enabled == True: ##If batch enabled, run batch scripts.
             config.Selected_file_path_dir = values["-FOLDER-"]
-            for file in os.listdir(config.Selected_file_path_dir):
-                if values['-FILETYPE-'] == "ROS Gridmap": ##Only run on ROS Gridmap files, skip others.
-                    if file.endswith('.yaml'): ##Assume ROS Gridmaps are always YAML files.
-                        config.filename = str(file)
-                        config.Selected_file_path = os.path.join(config.Selected_file_path_dir, config.filename)
-                        print(config.Selected_file_path)
-                        print("Found matching file, converting:" + config.filename)
-                        co.convert(config.Selected_file_path, config.Filetype)  
-                    else:
-                        print("Skipping File:" + str(file))         
-        else:
+            # Only run on ROS Gridmap files, skip others.
+            if values['-FILETYPE-'] == "ROS Gridmap":              
+                co.batch_ROS()
+            elif values['-FILETYPE-'] == "Pointcloud":
+                co.batch_PCD()
+            print("Batch operation done")
+        else: ## Else convert the single picked file.
             co.convert(config.Selected_file_path, config.Filetype)
     elif event == "-FILE LIST-":  # A file was chosen from the listbox
         try:
@@ -129,11 +136,13 @@ while True:
             config.Selected_file_path = os.path.join(
                 config.Selected_file_path_dir, config.filename
             )
-            print("\nValues Folder:" +str(values["-FOLDER-"])+ "\nFile:" + str(values["-FILE LIST-"][0]))
+            print("\nValues Folder:" +
+                  str(values["-FOLDER-"]) + "\nFile:" + str(values["-FILE LIST-"][0]))
             window["-TOUT-"].update(config.Selected_file_path)
-            window["Convert"].update(disabled=False, button_color="forestgreen")
-            config.batch_enabled = False
-            window["-Checkbox_Batch-"].update(values)
+            window["Convert"].update(
+                disabled=False, button_color="forestgreen")
+            #config.batch_enabled = False
+            #window["-Checkbox_Batch-"].update(values)
         except:
             pass
 

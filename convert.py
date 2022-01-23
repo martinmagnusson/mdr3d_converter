@@ -18,7 +18,7 @@ def identify(string):
     return filetype
 
 def convert(file, filetype): #Main function for handling full conversions.
-    print("Start Converting")  # Create popup?
+    #print("Start Converting")  # Create popup?
     start = time.time()  # start timer.
     get_path_converted_file()
     create_json(config.output_name)
@@ -26,24 +26,24 @@ def convert(file, filetype): #Main function for handling full conversions.
     log.logprint(os.path.abspath("\nConverting: " + str(file)))
     if filetype == "ROS Gridmap":
         log.logprint("\nConverting from ROS Gridmap")
-        extract.ROS(file)
+        extract.ROS()
         addtojson.Rosgrid()
     elif filetype == "2D Standard":
         extract.XML(file)
     elif filetype == "Pointcloud":
         log.logprint("\nConverting from PCD Pointcloud")
-        extract.PCD(file) 
+        extract.PCD() 
         addtojson.Pointcloud()
     log.logprint("printing Properties dict")
     log.logprint("\nClearing temp extracted data")
     reset_config() ## Resets the variables holding data, so a new one can be performed without carryover.
-    print("\nConversion Done!")
+    #print("\n Operation Done!")
     log.logprint("\nElapsed time is  {}s".format(time.time()-start))
 
 def reset_config():  # will be needed to run after each convert probably.
     config.properties.clear()
-    config.Selected_file_path = ""
-    config.Selected_file_path_dir = ""
+    config.Selected_file_path = "" 
+    #config.Selected_file_path_dir = ""
     config.filename = ""
     config.logfile_path = ""
     config.output_name = ""
@@ -67,3 +67,21 @@ def get_path_converted_file():
     config.output_name = os.path.realpath(
         config.Selected_file_path.split(".")[0] + "_Converted.json")
     #print("Output name is:" + config.output_name)
+
+def batch_ROS():
+    for file in os.listdir(config.Selected_file_path_dir):
+        if file.endswith('.yaml'):  # Assume ROS Gridmaps are always YAML files.
+            config.filename = str(file)
+            config.Selected_file_path = os.path.join(
+                config.Selected_file_path_dir , config.filename)
+            print("Converting:" + config.filename)
+            convert(config.Selected_file_path, config.Filetype)
+
+def batch_PCD():
+    for file in os.listdir(config.Selected_file_path_dir):
+        if file.endswith('.pcd'):  # Assume ROS Gridmaps are always YAML files.
+            config.filename = str(file)
+            config.Selected_file_path = os.path.join(
+                config.Selected_file_path_dir, config.filename)
+            print("Converting:" + config.filename)
+            convert(config.Selected_file_path, config.Filetype)

@@ -9,8 +9,7 @@ import re
 import numpy
 from bs4 import BeautifulSoup #XML
 
-def ROS(file):
-    properties = {}
+def ROS():
     with open(config.Selected_file_path, "r") as f:  # Extract data as dict.
         for line in f:
             if not (line == "" or line == ";" or line == "\n"): ##Make sure line is not empty.
@@ -30,11 +29,10 @@ def ROS(file):
         config.properties.update(dict({"pixels": pixels})) 
     log.logprint("\tWidth:" + str(width) + "\n\theight:" +
                  str(height) + "\n\tAmount: " + str(len(pixels)))
-    # remove extension from file to make name for convert.
 
-def PCD(file):
+def PCD():
     log.logprint("\nConverting from pointcloud")
-    with open(file, "r") as f:  # Extract data as dict.
+    with open(os.path.abspath(config.Selected_file_path), "r") as f:  # Extract data as dict.
         file_data = f.read()
         config.properties["version"] = re.search(
             "VERSION\s(.*)", file_data).group(1)
@@ -58,7 +56,7 @@ def PCD(file):
         # config.properties["points"] = re.search(last_line + "\s((.*\n*)*)", file_data).group(1)
         # log.logprint("\ntest points:"+ str(config.properties["points"]))
         log.logprint("Opened file: " + str(os.path.realpath(f.name)))
-    with open(file, "r") as f:  # Extract data
+    with open(os.path.abspath(config.Selected_file_path), "r") as f:  # Extract data
         file_matrix = f.readlines()
         matrix = []
         record = False
