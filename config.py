@@ -1,6 +1,7 @@
 # shared Variables in program
 #Related to UI
 logging_enabled = False
+batch_enabled = False
 Filetypes = ["ROS Gridmap", "2D Standard", "Pointcloud"]
 Font = "Helvetica, 14"
 Filetype = Filetypes[0] ##Default filetype set

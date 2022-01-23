@@ -30,10 +30,13 @@ file_list_column = [
         )
     ],
     [sg.HSeparator()],
+    #[
+    #    sg.Text("File \t"),
+    #    sg.In(size=(25, 1), enable_events=True, key="-FILE-"),
+    #    sg.FileBrowse(),
+    #],
     [
-        sg.Text("File \t"),
-        sg.In(size=(25, 1), enable_events=True, key="-FILE-"),
-        sg.FileBrowse(),
+        sg.Checkbox("Run on All Files in folder", key="-Checkbox_Batch-", tooltip="Run operation on all files in the folder", enable_events=True)
     ],
     [sg.HSeparator()],
     [
@@ -91,17 +94,22 @@ while True:
             and f.lower().endswith((".pcd", ".pgm", ".yaml", ".json", ".xml"))
         ]
         window["-FILE LIST-"].update(fnames)
+    if event == "-Checkbox_Batch-": ## Enable Conversion button without selecting a file.
+        if config.batch_enabled == False:
+            config.batch_enabled = True
+            window["Convert"].update(disabled=False, button_color="forestgreen")
+        else:
+            config.batch_enabled = False
+            window["Convert"].update(disabled=True, button_color="grey")
+        print("Batch mode:" + str(config.batch_enabled))
     if event == "Convert":
         print("Start Converting")  # Create popup?
         if values["-Checkbox_Logging-"] == True:
             config.logging_enabled = True
             print("\nLogfile will be created")
-        config.Filetype = co.identify(config.Filetype) #Doesnt do much atm. Attempts to verify file.
-        #if config.Filetype == "2D Standard": # Only check validity on XML files
-            #if va.validate(config.Selected_file_path, config.Filetype): ##Currently just says if file is valid or not, convert still runs afterwards.
-                #log.logprint('Valid! :)')
-            #else:
-                #log.logprint('Not valid! :(')
+        if values["-Checkbox_Batch-"] == True:
+            config.batch_enabled = True
+            print("checkbox test")
         co.convert(config.Selected_file_path, config.Filetype)
     elif event == "-FILE LIST-":  # A file was chosen from the listbox
         try:
@@ -114,6 +122,8 @@ while True:
             print("\nValues Folder:" +str(values["-FOLDER-"])+ "\nFile:" + str(values["-FILE LIST-"][0]))
             window["-TOUT-"].update(config.Selected_file_path)
             window["Convert"].update(disabled=False, button_color="forestgreen")
+            config.batch_enabled = False
+            window["-Checkbox_Batch-"].update(values)
         except:
             pass
 
