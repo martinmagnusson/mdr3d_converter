@@ -70,7 +70,8 @@ def PCD():
             if str(lines).rstrip() == str(last_line).rstrip() and record == False:
                 print("last line found")
                 record = True
-    log.logprint("Size of matrix is:" + str(len(matrix))) 
+    config.size = str(len(matrix))
+    log.logprint("Size of matrix is:" + config.size) 
     config.properties["list_of_points"] = matrix
     config.matrix_out = matrix
     
