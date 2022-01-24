@@ -20,7 +20,7 @@ def identify(string):
 def convert(file, filetype): #Main function for handling full conversions.
     #print("Start Converting")  # Create popup?
     start = time.time()  # start timer.
-    get_path_converted_file()
+    get_new_filenames()
     create_json(config.output_name)
     config.time_now = str(datetime.now())
     log.logprint(os.path.abspath("\nConverting: " + str(file)))
@@ -36,6 +36,7 @@ def convert(file, filetype): #Main function for handling full conversions.
         addtojson.Pointcloud()
     log.logprint("printing Properties dict")
     log.logprint("\nClearing temp extracted data")
+    log.log_finalize() ##Print logs to file.
     reset_config() ## Resets the variables holding data, so a new one can be performed without carryover.
     #print("\n Operation Done!")
     log.logprint("\nElapsed time is  {}s".format(time.time()-start))
@@ -62,11 +63,25 @@ def create_json(output_name):
     log.logprint("\nJSON file created \nHeader taken from: " +
                  str(template_path))
 
+def get_new_filenames():
+    get_path_log_file()
+    get_path_batch_log_file()
+    get_path_converted_file()
+
+def get_path_log_file():
+    config.program_path = os.path.dirname(__file__)
+    config.logfile_path = os.path.realpath(
+        config.Selected_file_path.split(".")[0] + "_Log.txt")
+
+def get_path_batch_log_file():
+    config.program_path = os.path.dirname(__file__)
+    config.batchlog_path = os.path.realpath(
+        config.Selected_file_path_dir + "\Batch_Log.txt")
+
 def get_path_converted_file():
     config.program_path = os.path.dirname(__file__)
     config.output_name = os.path.realpath(
         config.Selected_file_path.split(".")[0] + "_Converted.json")
-    #print("Output name is:" + config.output_name)
 
 def batch_ROS():
     for file in os.listdir(config.Selected_file_path_dir):
@@ -76,6 +91,7 @@ def batch_ROS():
                 config.Selected_file_path_dir , config.filename)
             print("Converting:" + config.filename)
             convert(config.Selected_file_path, config.Filetype)
+            
 
 def batch_PCD():
     for file in os.listdir(config.Selected_file_path_dir):

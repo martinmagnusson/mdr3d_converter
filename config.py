@@ -7,12 +7,15 @@ Font = "Helvetica, 14"
 Filetype = Filetypes[0] ##Default filetype set
 
 # Related to file conversion, reset after each conversion.
+log = ""
+batchlog = ""
 program_path = ""
 Selected_file_path = ""
 Selected_file_path_dir = ""
 properties = {} ##Dict to hold all file data.
 filename = ""
 logfile_path = ""
+batchlog_path = ""
 output_name = ""
 matrix_out = []
 time_now = ""
