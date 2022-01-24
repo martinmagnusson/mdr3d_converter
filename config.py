@@ -19,3 +19,5 @@ batchlog_path = ""
 output_name = ""
 matrix_out = []
 time_now = ""
+duration = []
+size = []

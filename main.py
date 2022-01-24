@@ -126,6 +126,7 @@ while True:
                 co.batch_ROS()
             elif values['-FILETYPE-'] == "Pointcloud":
                 co.batch_PCD()
+            log.batch_log_finalize()    
             print("Batch operation done")
         else: ## Else convert the single picked file.
             co.convert(config.Selected_file_path, config.Filetype)

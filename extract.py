@@ -24,11 +24,12 @@ def ROS():
         log.logprint("Loading PGM data.")
         pixels = list(pgmf.getdata())
         width, height = pgmf.size
+        config.size = str(len(pixels))
         config.properties.update(dict({"width": width})) 
         config.properties.update(dict({"height": height})) 
         config.properties.update(dict({"pixels": pixels})) 
     log.logprint("\tWidth:" + str(width) + "\n\theight:" +
-                 str(height) + "\n\tAmount: " + str(len(pixels)))
+                 str(height) + "\n\tAmount: " + config.size)
 
 def PCD():
     log.logprint("\nConverting from pointcloud")

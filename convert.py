@@ -37,9 +37,12 @@ def convert(file, filetype): #Main function for handling full conversions.
     log.logprint("printing Properties dict")
     log.logprint("\nClearing temp extracted data")
     log.log_finalize() ##Print logs to file.
+    config.duration = format(time.time()-start)
+    print("\nElapsed time is  " + str(config.duration))
+    if config.batch_enabled == True:
+        print("\nAdding to Batchlog")
+        log.batchlogprint() # stores the file data in batch log.
     reset_config() ## Resets the variables holding data, so a new one can be performed without carryover.
-    #print("\n Operation Done!")
-    log.logprint("\nElapsed time is  {}s".format(time.time()-start))
 
 def reset_config():  # will be needed to run after each convert probably.
     config.properties.clear()
@@ -90,8 +93,7 @@ def batch_ROS():
             config.Selected_file_path = os.path.join(
                 config.Selected_file_path_dir , config.filename)
             print("Converting:" + config.filename)
-            convert(config.Selected_file_path, config.Filetype)
-            
+            convert(config.Selected_file_path, config.Filetype)          
 
 def batch_PCD():
     for file in os.listdir(config.Selected_file_path_dir):
