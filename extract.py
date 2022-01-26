@@ -43,6 +43,9 @@ def PCD():
         config.properties["count"] = re.search(
             "COUNT\s(.*)", file_data).group(1)
         config.properties["size"] = re.search("SIZE\s(.*)", file_data).group(1)
+        size = re.search("SIZE\s(.*)", file_data).group(1)
+        sizelen = len(size.split())
+        print("\n\tSize of size: " + str(sizelen))
         config.properties["width"] = re.search(
             "WIDTH\s(.*)", file_data).group(1)
         config.properties["height"] = re.search(
@@ -63,10 +66,13 @@ def PCD():
         record = False
         for lines in file_matrix:  # find last line, record rows after that in matrix.
             if record == True:
-                ##print(lines.rstrip())
-                data = lines.split(" ",2)
-                #matrix = numpy.append(matrix,data,0)
-                matrix.append([float(data[0]),float(data[1]),float(data[2])])
+                data = lines.split(" ")
+                if sizelen == 3:
+                    matrix.append([float(data[0]),float(data[1]),float(data[2])])
+                elif sizelen == 4:
+                    matrix.append([float(data[0]),float(data[1]),float(data[2]),float(data[3])])
+                elif sizelen == 5:
+                    matrix.append([float(data[0]),float(data[1]),float(data[2]),float(data[3]),float(data[4])])
             if str(lines).rstrip() == str(last_line).rstrip() and record == False:
                 print("last line found")
                 record = True
