@@ -12,7 +12,8 @@ import re
 def Rosgrid():
     # Currently everything is added as its own "Values" key, not sure if correct.
     with open(config.output_name, 'r+') as file:
-        log.logprint("Opened file:" + str(config.output_name))
+        log.logprint("\n\nPreparing to write data to JSON:")
+        log.logprint("\nOpened JSON file:" + str(config.output_name))
         # log.logprint(properties)
         file_data = json.load(file)
         # file_data = json.load(file)  # First we load existing data into a dict.
@@ -31,7 +32,7 @@ def Rosgrid():
             {"coordinate_system": "relative"})  # temp
         if config.properties["resolution"] != "":         ##Assumption! z resolution is same as x and y, Maybe better set z as 1?
             res_array = [float(config.properties["resolution"]),float(config.properties["resolution"]),float(config.properties["resolution"])]
-            log.logprint("Resolution taken from x,y as " + str(float(config.properties["resolution"])) + "and assumed same for z.")
+            log.logprint("\nResolution taken from x,y as " + str(float(config.properties["resolution"])) + "and assumed same for z.")
             file_data["properties"].update(
                 {"resolution": res_array})
         file_data["properties"].update(
@@ -56,7 +57,8 @@ def Rosgrid():
 def Pointcloud():
     # Currently everything is added as its own "Values" key, not sure if correct.
     with open(config.output_name, 'r+') as file:
-        log.logprint("Opened file:" + str(config.output_name))
+        log.logprint("\n\nPreparing to write data to JSON:")
+        log.logprint("\nOpened file:" + str(config.output_name))
         # log.logprint(properties)
         file_data = json.load(file)
         # file_data = json.load(file)  # First we load existing data into a dict.

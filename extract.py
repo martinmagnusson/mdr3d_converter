@@ -10,6 +10,7 @@ import numpy
 from bs4 import BeautifulSoup #XML
 
 def ROS():
+    log.logprint("\n\nExtracting Data from ROS Gridmap:")
     with open(config.Selected_file_path, "r") as f:  # Extract data as dict.
         for line in f:
             if not (line == "" or line == ";" or line == "\n"): ##Make sure line is not empty.
@@ -17,11 +18,12 @@ def ROS():
                 #print("\n" +str(key) + "\t" +str(val))
                 config.properties[key] = val.lstrip()
         #print("\ntest dict:" + str(config.properties))
-        log.logprint("Opened file: " + str(os.path.realpath(f.name)))
+        log.logprint("\nOpened file: " + str(os.path.realpath(f.name)))
     pgm_file_path = os.path.abspath(str(
         config.Selected_file_path_dir) + "/" + str(config.properties["image"].strip()))
     with ImageProc.open(pgm_file_path, mode="r") as pgmf:
-        log.logprint("Loading PGM data.")
+        log.logprint("\n\nOpeninng Accompanying image file:")
+        log.logprint("\nLoading PGM data from:" + str(pgm_file_path))
         pixels = list(pgmf.getdata())
         width, height = pgmf.size
         config.size = str(len(pixels))
@@ -32,9 +34,10 @@ def ROS():
                  str(height) + "\n\tAmount: " + config.size)
 
 def PCD():
-    log.logprint("\nConverting from pointcloud")
+    log.logprint("\n\nExtracting Data from Pointcloud file:")
     with open(os.path.abspath(config.Selected_file_path), "r") as f:  # Extract data as dict.
         file_data = f.read()
+        log.logprint("\nOpened file: " + str(os.path.realpath(f.name)))
         config.properties["version"] = re.search(
             "VERSION\s(.*)", file_data).group(1)
         config.properties["fields"] = re.search(
@@ -45,7 +48,7 @@ def PCD():
         config.properties["size"] = re.search("SIZE\s(.*)", file_data).group(1)
         size = re.search("SIZE\s(.*)", file_data).group(1)
         sizelen = len(size.split())
-        print("\n\tSize of size: " + str(sizelen))
+        log.logprint("\n\tArray Elements: " + str(sizelen))
         config.properties["width"] = re.search(
             "WIDTH\s(.*)", file_data).group(1)
         config.properties["height"] = re.search(
@@ -59,7 +62,7 @@ def PCD():
         last_line = re.search("(DATA\s.*)", file_data).group(1)
         # config.properties["points"] = re.search(last_line + "\s((.*\n*)*)", file_data).group(1)
         # log.logprint("\ntest points:"+ str(config.properties["points"]))
-        log.logprint("Opened file: " + str(os.path.realpath(f.name)))
+        
     with open(os.path.abspath(config.Selected_file_path), "r") as f:  # Extract data
         file_matrix = f.readlines()
         matrix = []
@@ -74,10 +77,10 @@ def PCD():
                 elif sizelen == 5:
                     matrix.append([float(data[0]),float(data[1]),float(data[2]),float(data[3]),float(data[4])])
             if str(lines).rstrip() == str(last_line).rstrip() and record == False:
-                print("last line found")
+                #print("last line found")
                 record = True
     config.size = str(len(matrix))
-    log.logprint("Size of matrix is:" + config.size) 
+    log.logprint("\n\tSize of matrix is:" + config.size) 
     config.properties["list_of_points"] = matrix
     config.matrix_out = matrix
     

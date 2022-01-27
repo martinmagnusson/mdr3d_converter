@@ -34,7 +34,7 @@ def convert(file, filetype): #Main function for handling full conversions.
         log.logprint("\nConverting from PCD Pointcloud")
         extract.PCD() 
         addtojson.Pointcloud()
-    log.logprint("printing Properties dict")
+    log.logprint("\nPrinting Properties dict")
     log.logprint("\nClearing temp extracted data")
     log.log_finalize() ##Print logs to file.
     config.duration = format(time.time()-start)
