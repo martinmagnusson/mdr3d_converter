@@ -101,17 +101,16 @@ def XML():
     config.properties["height"] = num_cells_y
     tempmatrix = [0] * int(config.size)
     for line in cells:#check each line.
-        print(line)
         #x = line.get("x")
         #y = line.get("y")
         #value = line.get("value")
-        x = re.search(
-            "x=\"(.{1,4})\"", str(line)).group(1)
-        y = re.search(
-            "y=\"(.{1,4})\"", str(line)).group(1)
-        value = re.search(
-            "value=\"(.{1,4})\"", str(line)).group(1)
-        print("\n\tx: " +str(x))
-        print("\n\ty: " +str(y))
-        print("\n\tvalue: " +str(value))
-        tempmatrix[x + y*num_cells_x] #input matrix as array.
+        x = int(re.search(
+            "x=\"(.{1,4})\"", str(line)).group(1))
+        y = int(re.search(
+            "y=\"(.{1,4})\"", str(line)).group(1))
+        value = int(re.search(
+            "value=\"(.{1,4})\"", str(line)).group(1))
+        #print("\n\tx: " +str(x))
+        #print("\ty: " +str(y))
+        #print("\tvalue: " +str(value))
+        tempmatrix[x + y*int(num_cells_x)] = value #input matrix as array.
