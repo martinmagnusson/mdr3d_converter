@@ -29,7 +29,8 @@ def convert(file, filetype): #Main function for handling full conversions.
         extract.ROS()
         addtojson.Rosgrid()
     elif filetype == "2D Standard":
-        extract.XML(file)
+        log.logprint("\nConverting from 2D Standard")
+        extract.XML()
     elif filetype == "Pointcloud":
         log.logprint("\nConverting from PCD Pointcloud")
         extract.PCD() 

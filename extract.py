@@ -84,12 +84,15 @@ def PCD():
     config.properties["list_of_points"] = matrix
     config.matrix_out = matrix
     
-def XML(file):
+def XML():
     log.logprint("\nConverting from 2D Standard")
-    with open(file, 'r') as f:
+    with open(config.Selected_file_path, 'r') as f:
         data = f.read()
     Bs_data = BeautifulSoup(data, "xml")
-    num_cells = Bs_data.find('num_cells_x')
-    cells = Bs_data.find_all('cells')
-    log.logprint(num_cells)
-    log.logprint(cells)
+    grid_map = Bs_data.find('grid_map')
+    num_cells_x = grid_map.get("num_cells_x")
+    num_cells_y = grid_map.find('num_cells_y')
+    cells = Bs_data.find_all('cell')
+    log.logprint("\nNum_cells_x: " + str(num_cells_x))
+    log.logprint("\nNum_cells_y: " + str(num_cells_y))
+    config.size = str(int(num_cells_x)*int(num_cells_y))
