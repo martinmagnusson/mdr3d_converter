@@ -90,9 +90,28 @@ def XML():
         data = f.read()
     Bs_data = BeautifulSoup(data, "xml")
     grid_map = Bs_data.find('grid_map')
-    num_cells_x = grid_map.get("num_cells_x")
-    num_cells_y = grid_map.find('num_cells_y')
-    cells = Bs_data.find_all('cell')
+    num_cells_x = str(grid_map.get("num_cells_x"))
+    num_cells_y = str(grid_map.get('num_cells_y'))
+    cells = grid_map.find_all('cell')
     log.logprint("\nNum_cells_x: " + str(num_cells_x))
     log.logprint("\nNum_cells_y: " + str(num_cells_y))
-    config.size = str(int(num_cells_x)*int(num_cells_y))
+    config.size = int(num_cells_x)*int(num_cells_y)
+    config.properties["count"] = config.size
+    config.properties["width"] = num_cells_x
+    config.properties["height"] = num_cells_y
+    tempmatrix = [0] * int(config.size)
+    for line in cells:#check each line.
+        print(line)
+        #x = line.get("x")
+        #y = line.get("y")
+        #value = line.get("value")
+        x = re.search(
+            "x=\"(.{1,4})\"", str(line)).group(1)
+        y = re.search(
+            "y=\"(.{1,4})\"", str(line)).group(1)
+        value = re.search(
+            "value=\"(.{1,4})\"", str(line)).group(1)
+        print("\n\tx: " +str(x))
+        print("\n\ty: " +str(y))
+        print("\n\tvalue: " +str(value))
+        tempmatrix[x + y*num_cells_x] #input matrix as array.
