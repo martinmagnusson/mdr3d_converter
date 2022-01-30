@@ -31,6 +31,7 @@ def convert(file, filetype): #Main function for handling full conversions.
     elif filetype == "2D Standard":
         log.logprint("\nConverting from 2D Standard")
         extract.XML()
+        addtojson.TWODstandard()
     elif filetype == "Pointcloud":
         log.logprint("\nConverting from PCD Pointcloud")
         extract.PCD() 
@@ -39,7 +40,7 @@ def convert(file, filetype): #Main function for handling full conversions.
     log.logprint("\nClearing temp extracted data")
     log.log_finalize() ##Print logs to file.
     config.duration = format(time.time()-start)
-    print("\nElapsed time is  " + str(config.duration))
+    log.logprint("\nElapsed time is  " + str(config.duration))
     if config.batch_enabled == True:
         print("\nAdding to Batchlog")
         log.batchlogprint() # stores the file data in batch log.
@@ -99,6 +100,15 @@ def batch_ROS():
 def batch_PCD():
     for file in os.listdir(config.Selected_file_path_dir):
         if file.endswith('.pcd'):  # Assume ROS Gridmaps are always YAML files.
+            config.filename = str(file)
+            config.Selected_file_path = os.path.join(
+                config.Selected_file_path_dir, config.filename)
+            print("Converting:" + config.filename)
+            convert(config.Selected_file_path, config.Filetype)
+
+def batch_TwoDG():
+    for file in os.listdir(config.Selected_file_path_dir):
+        if file.endswith('.xml'):  # Assume ROS Gridmaps are always YAML files.
             config.filename = str(file)
             config.Selected_file_path = os.path.join(
                 config.Selected_file_path_dir, config.filename)

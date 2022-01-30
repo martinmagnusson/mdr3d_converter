@@ -82,3 +82,32 @@ def Pointcloud():
         file_data["properties"].update({"localmap_id": config.output_name})
         file.seek(0)  # Sets file's current position at offset.
         json.dump(file_data, file, indent=4)  # convert back to json.
+
+def TWODstandard():
+    # Currently everything is added as its own "Values" key, not sure if correct.
+    with open(config.output_name, 'r+') as file:
+        log.logprint("\n\nPreparing to write data to JSON:")
+        log.logprint("\nOpened file:" + str(config.output_name))
+        # log.logprint(properties)
+        file_data = json.load(file)
+        # file_data = json.load(file)  # First we load existing data into a dict.
+        # Join new_data with file_data inside emp_details
+        file_data.update(
+            {"title": "Converted 2D Standard Gridmap"})
+        file_data.update(
+            {"description": "Implementation of 2D Standard Gridmap into 3D Standard"})
+        file_data["properties"].update(
+            {"localmap_id": str(config.filename)})
+        file_data["properties"].update(
+            {"time": config.time_now})  # Temp
+        file_data["properties"].update(
+            {"map_description": "converted from old maptype"})
+        file_data["properties"].update(
+            {"coordinate_system": "relative"})  # temp
+        file_data["properties"].update(
+            #{"list_of_points": config.properties["list_of_points"]})
+            {"list_of_points": config.matrix_out})
+        # <-- get real name not path..
+        file_data["properties"].update({"localmap_id": config.output_name})
+        file.seek(0)  # Sets file's current position at offset.
+        json.dump(file_data, file, indent=4)  # convert back to json.

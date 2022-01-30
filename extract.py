@@ -114,3 +114,4 @@ def XML():
         #print("\ty: " +str(y))
         #print("\tvalue: " +str(value))
         tempmatrix[x + y*int(num_cells_x)] = value #input matrix as array.
+    config.matrix_out = tempmatrix

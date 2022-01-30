@@ -126,6 +126,8 @@ while True:
                 co.batch_ROS()
             elif values['-FILETYPE-'] == "Pointcloud":
                 co.batch_PCD()
+            elif values['-FILETYPE-'] == "2D Standard":
+                co.batch_TwoDG()
             log.batch_log_finalize()    
             print("Batch operation done")
         else: ## Else convert the single picked file.
