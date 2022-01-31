@@ -38,9 +38,11 @@ def convert(file, filetype): #Main function for handling full conversions.
         addtojson.Pointcloud()
     log.logprint("\nPrinting Properties dict")
     log.logprint("\nClearing temp extracted data")
-    log.log_finalize() ##Print logs to file.
     config.duration = format(time.time()-start)
+    log.logprint("\n\nConversion Information")
     log.logprint("\nElapsed time is  " + str(config.duration))
+    log.logprint("\nTime per 100000 points:  " + str((float(config.duration)/float(config.size))*100000))
+    log.log_finalize() ##Print logs to file.
     if config.batch_enabled == True:
         print("\nAdding to Batchlog")
         log.batchlogprint() # stores the file data in batch log.

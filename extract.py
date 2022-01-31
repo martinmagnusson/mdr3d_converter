@@ -101,7 +101,7 @@ def XML():
     config.properties["count"] = config.size
     config.properties["width"] = num_cells_x
     config.properties["height"] = num_cells_y
-    tempmatrix = [0] * int(config.size)
+    config.matrix_out = [0] * int(config.size)
     for line in cells:#check each line.
         #x = line.get("x")
         #y = line.get("y")
@@ -115,5 +115,5 @@ def XML():
         #print("\n\tx: " +str(x))
         #print("\ty: " +str(y))
         #print("\tvalue: " +str(value))
-        tempmatrix[x + y*int(num_cells_x)] = value #input matrix as array.
-    config.matrix_out = tempmatrix
+        config.matrix_out[x + y*int(num_cells_x)] = value #input matrix as array.
+    #config.matrix_out = tempmatrix
