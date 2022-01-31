@@ -37,6 +37,7 @@ def PCD():
     log.logprint("\n\nExtracting Data from Pointcloud file:")
     with open(os.path.abspath(config.Selected_file_path), "r") as f:  # Extract data as dict.
         file_data = f.read()
+        #print(file_data)
         log.logprint("\nOpened file: " + str(os.path.realpath(f.name)))
         config.properties["version"] = re.search(
             "VERSION\s(.*)", file_data).group(1)
@@ -62,6 +63,7 @@ def PCD():
         last_line = re.search("(DATA\s.*)", file_data).group(1)
         # config.properties["points"] = re.search(last_line + "\s((.*\n*)*)", file_data).group(1)
         # log.logprint("\ntest points:"+ str(config.properties["points"]))
+        
         
     with open(os.path.abspath(config.Selected_file_path), "r") as f:  # Extract data
         file_matrix = f.readlines()
