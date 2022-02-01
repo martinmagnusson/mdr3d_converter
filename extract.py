@@ -92,18 +92,18 @@ def XML():
         data = f.read()
     Bs_data = BeautifulSoup(data, "xml")
     grid_map = Bs_data.find('grid_map')
-    num_cells_x = str(grid_map.get("num_cells_x"))
-    num_cells_y = str(grid_map.get('num_cells_y'))
+    num_cells_x = int(grid_map.get("num_cells_x"))
+    num_cells_y = int(grid_map.get('num_cells_y'))
     cells = grid_map.find_all('cell')
     log.logprint("\nNum_cells_x: " + str(num_cells_x))
     log.logprint("\nNum_cells_y: " + str(num_cells_y))
-    config.size = int(num_cells_x)*int(num_cells_y)
-    config.properties["count"] = config.size
-    config.properties["width"] = num_cells_x
-    config.properties["height"] = num_cells_y
+    config.size = num_cells_x*num_cells_y
+    config.properties["count"] = str(config.size)
+    config.properties["width"] = str(num_cells_x)
+    config.properties["height"] = str(num_cells_y)
     config.matrix_out = [0] * int(config.size)
     regex = re.compile("<.*value=\"(.{1,4})\".*.*x=\"(.{1,4})\" y=\"(.{1,4})\"/>")
     for line in cells:#check each line.
         value,x,y = regex.search(str(line).strip()).groups()
         #value,x,y = re.search(regex, str(line).strip()).groups()
-        config.matrix_out[int(x) + int(y)*int(num_cells_x)] = int(value) #input matrix as array.
+        config.matrix_out[int(x) + int(y)*num_cells_x] = int(value) #input matrix as array.
