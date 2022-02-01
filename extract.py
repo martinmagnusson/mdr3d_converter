@@ -7,7 +7,8 @@ import custom_logging as log
 from PIL import Image as ImageProc
 import re
 import numpy
-from bs4 import BeautifulSoup #XML
+from bs4 import BeautifulSoup #XML´
+import time
 
 def ROS():
     log.logprint("\n\nExtracting Data from ROS Gridmap:")
@@ -88,6 +89,7 @@ def PCD():
     
 def XML():
     log.logprint("\nConverting from 2D Standard")
+    temptimestart = time.time()
     with open(config.Selected_file_path, 'r') as f:
         data = f.read()
     Bs_data = BeautifulSoup(data, "xml")
@@ -102,8 +104,11 @@ def XML():
     config.properties["width"] = str(num_cells_x)
     config.properties["height"] = str(num_cells_y)
     config.matrix_out = [0] * int(config.size)
+    log.logprint("\nElapsed time parsing XML: " + str(format(time.time()-temptimestart)))
     regex = re.compile("<.*value=\"(.{1,4})\".*.*x=\"(.{1,4})\" y=\"(.{1,4})\"/>")
+    temptimestart = time.time()
     for line in cells:#check each line.
         value,x,y = regex.search(str(line).strip()).groups()
         #value,x,y = re.search(regex, str(line).strip()).groups()
         config.matrix_out[int(x) + int(y)*num_cells_x] = int(value) #input matrix as array.
+    log.logprint("\nElapsed time extracting cells: " + str(format(time.time()-temptimestart)))
