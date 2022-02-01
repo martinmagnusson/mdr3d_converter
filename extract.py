@@ -102,8 +102,8 @@ def XML():
     config.properties["width"] = num_cells_x
     config.properties["height"] = num_cells_y
     config.matrix_out = [0] * int(config.size)
+    regex = re.compile("<.*value=\"(.{1,4})\".*.*x=\"(.{1,4})\" y=\"(.{1,4})\"/>")
     for line in cells:#check each line.
-        regex = "<.*value=\"(.{1,4})\".*.*x=\"(.{1,4})\" y=\"(.{1,4})\"/>"
-        value,x,y = re.search(regex, str(line).strip()).groups()
+        value,x,y = regex.search(str(line).strip()).groups()
+        #value,x,y = re.search(regex, str(line).strip()).groups()
         config.matrix_out[int(x) + int(y)*int(num_cells_x)] = int(value) #input matrix as array.
-    #config.matrix_out = tempmatrix
