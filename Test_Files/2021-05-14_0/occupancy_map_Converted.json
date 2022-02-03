@@ -5,7 +5,7 @@
     "type": "object",
     "properties": {
         "localmap_id": "occupancy_map.yaml",
-        "time": "2022-01-23 10:46:06.393750",
+        "time": "2022-02-03 09:39:03.387045",
         "map_description": "converted from old maptype",
         "coordinate_system": "relative",
         "resolution": [

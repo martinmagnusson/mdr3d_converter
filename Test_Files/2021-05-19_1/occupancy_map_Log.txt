@@ -1,0 +1,23 @@
+
+JSON file created 
+Header taken from: E:\Dropbox\Student\Exjobb\Martin\Program\JSON_Templates\Convert_Template.jsonE:\Dropbox\Student\Exjobb\Martin\Program\
+Converting: E:\Dropbox\Student\Exjobb\Martin\Program\Test_Files\2021-05-19_1\occupancy_map.yaml
+Converting from ROS Gridmap
+
+Extracting Data from ROS Gridmap:
+Opened file: E:\Dropbox\Student\Exjobb\Martin\Program\Test_Files\2021-05-19_1\occupancy_map.yaml
+
+Openinng Accompanying image file:
+Loading PGM data from:E:\Dropbox\Student\Exjobb\Martin\Program\Test_Files\2021-05-19_1\occupancy_map.pgm	Width:358
+	height:419
+	Amount: 150002
+
+Preparing to write data to JSON:
+Opened JSON file:E:\Dropbox\Student\Exjobb\Martin\Program\Test_Files\2021-05-19_1\occupancy_map_Converted.json
+Resolution taken from x,y as 0.2and assumed same for z.
+Printing Properties dict
+Clearing temp extracted data
+
+Conversion Information
+Elapsed time is  1.0202317237854004
+Time per 100000 points:  0.6801454139180814

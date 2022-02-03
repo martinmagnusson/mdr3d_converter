@@ -31,7 +31,7 @@ def ROS():
         config.properties.update(dict({"width": width})) 
         config.properties.update(dict({"height": height})) 
         config.properties.update(dict({"pixels": pixels})) 
-    log.logprint("\tWidth:" + str(width) + "\n\theight:" +
+    log.logprint("\n\tWidth:" + str(width) + "\n\theight:" +
                  str(height) + "\n\tAmount: " + config.size)
 
 def PCD():
