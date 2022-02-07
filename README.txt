@@ -1,7 +1,7 @@
 3D-MDR Converter.
 Program created Fall 2021 to Spring 2021.
 
-Program can currently handle converting from 3 types for formats into the IEEE P2751/D1 3D-MDR under development.
+Program can currently handle converting from 3 types for formats into the IEEE P2751/D1 3D-MDR which is under development.
 * ROS Gridmaps
 * 2D Standard (IEEE 1873-2015)
 * PCD Pointclouds.
